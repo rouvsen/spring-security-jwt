@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,7 +16,6 @@ import javax.persistence.*;
 public class User {
 
     @Id
-    @Column(unique = true, nullable = false)
     private String username;
 
     private String password;

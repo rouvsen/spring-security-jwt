@@ -37,10 +37,8 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-
         String token = getToken(request);
         String username;
-
         try {
             if (!token.isBlank()) {
                 username = tokenGenerator.verifyJWT(token).getSubject();

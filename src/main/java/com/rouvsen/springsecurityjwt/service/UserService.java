@@ -29,6 +29,15 @@ public class UserService {
                 .build();
     }
 
+    public UserDto getUser(String username) {
+        var userByUsername = findUserByUsername(username);
+        return UserDto.builder()
+                .username(userByUsername.getUsername())
+                .role(userByUsername.getRole())
+                .email(userByUsername.getEmail())
+                .build();
+    }
+
     public User findUserByUsername(String username) {
         return userRepository.findUserByUsername(username)
                 .orElseThrow(() -> GeneralException.builder()
