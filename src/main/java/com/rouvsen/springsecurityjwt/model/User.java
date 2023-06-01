@@ -1,10 +1,11 @@
 package com.rouvsen.springsecurityjwt.model;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "user")
@@ -15,20 +16,11 @@ import lombok.NoArgsConstructor;
 public class User {
 
     @Id
-    @SequenceGenerator(
-            name = "user_sequence",
-            sequenceName = "user_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "user_sequence"
-    )
-    private Long id;
-
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String username;
+
     private String password;
+    private String email;
 
     @Enumerated(EnumType.STRING)
     private Role role;
