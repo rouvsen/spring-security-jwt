@@ -1,12 +1,12 @@
 package com.rouvsen.springsecurityjwt.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rouvsen.springsecurityjwt.service.impl.UserDetailsServiceImpl;
 import com.rouvsen.springsecurityjwt.utils.TokenGenerator;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -23,10 +23,10 @@ import java.util.Map;
 public class JwtFilter extends OncePerRequestFilter {
 
     private final TokenGenerator tokenGenerator;
-    private final UserDetailsService userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
     private final ObjectMapper objectMapper;
 
-    public JwtFilter(TokenGenerator tokenGenerator, UserDetailsService userDetailsService, ObjectMapper objectMapper) {
+    public JwtFilter(TokenGenerator tokenGenerator, UserDetailsServiceImpl userDetailsService, ObjectMapper objectMapper) {
         this.tokenGenerator = tokenGenerator;
         this.userDetailsService = userDetailsService;
         this.objectMapper = objectMapper;
