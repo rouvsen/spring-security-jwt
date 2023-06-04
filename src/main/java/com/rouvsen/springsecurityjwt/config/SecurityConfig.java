@@ -5,6 +5,7 @@ import com.rouvsen.springsecurityjwt.security.JwtAuthenticationEntryPoint;
 import com.rouvsen.springsecurityjwt.security.JwtFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -47,6 +48,8 @@ public class SecurityConfig {
                 .authorizeRequests((auth) -> {
                     auth.antMatchers("/api/admin").hasAuthority("ADMIN");
                     auth.antMatchers("/api/user").hasAnyAuthority("ADMIN", "USER");
+//                    auth.antMatchers("/api/test").hasAuthority("ADMIN");
+                    auth.antMatchers(HttpMethod.GET, "/api/home").hasAuthority("USER");//only can send GET
                     auth.anyRequest().authenticated();
                 })
                 .formLogin().disable()

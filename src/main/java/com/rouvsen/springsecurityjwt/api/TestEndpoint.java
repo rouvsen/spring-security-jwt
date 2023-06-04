@@ -1,5 +1,6 @@
 package com.rouvsen.springsecurityjwt.api;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+//@PreAuthorize("hasAuthority('USER')")
 @RequestMapping("/api")
 public class TestEndpoint {
 
@@ -25,20 +27,26 @@ public class TestEndpoint {
         return "public";
     }
 
-    @GetMapping("/me")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("/myUsername")
     public String getMySelf() {
-        return "Who are you? " + ((UserDetails)SecurityContextHolder.getContext().getAuthentication()
+        return "You're Admin, username is " + ((UserDetails)SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal()).getUsername();
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @GetMapping("/mePrincipal")//username, password, token details and authorities
     public String getMySelfAll() {
-        return SecurityContextHolder.getContext().getAuthentication().toString();
+        return "You're User, Details: " + SecurityContextHolder.getContext().getAuthentication().toString();
     }
 
-    //TODO
-    // 1) use PreAuthorized only top of 'Method',
-    // 2) use PreAuthorized only top of 'Class' (which is Overridden by SecurityConfig Configs.)
-    // 3) Edit SecurityConfig, cause User can send only 'GET' Request, User cannot send POST Req. spec.-endpoint
+    @GetMapping("/test")//Top of Class
+    public String test() {
+        return "Top of Class..";
+    }
 
+    @GetMapping("/home")//authority with request-method
+    public String home() {
+        return "Here is Home, User can only send GET request";
+    }
 }
